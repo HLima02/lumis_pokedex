@@ -8,6 +8,8 @@
   --gray-800: #2C2C2C;
   --gray-900: #1E1E1E;
 
+  --dark-blue: #212E4C;
+
   --green-plant: #11B047;    
   --orange-fire: #FC6636;     
   --blue-water: #319AFF;       
@@ -80,4 +82,36 @@ nav a {
 .input_section_content svg {
   position: absolute;
   right: 20px;
+}
+
+/* style Lista de pokemons */
+.poke_list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.pokemon_card {
+  width: 100%;
+  max-width: 203px;
+  padding: 10px;
+  background-color: var(--gray-300);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.pokemon_card img {
+  width: 100%;
+  max-width: 145px;
+  margin: 10px auto;
+}
+
+.pokemon_card h3 {
+  font-size: 14px;
+  color: var(--dark-blue);
 }
