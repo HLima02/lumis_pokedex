@@ -28,7 +28,56 @@
   --beige-normal: #DAD7CD;     
   --purple-psychic: #E056FD;   
   --green-bug: #A3CB38;        
-  --blue-dragon: #3F37C9;      
+  --blue-dragon: #3F37C9;        
+}
 
-  
+.m_w_1200 {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+header {
+  border-bottom: 1px solid var(--gray-100);
+  padding: 1rem 3%;
+}
+
+.header_section {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav a {
+  font-size: 1rem;
+  color: var(--gray-900);
+  margin: 0 .5rem;
+}
+
+.input_section {
+  width: 100%;
+}
+
+.input_section_content {
+  width: 100%;
+  max-width: 720px;
+  background-color: var(--gray-200);
+  padding: 18px;
+  padding-left: 48px;
+  border-radius: 28px;
+  margin: 30px auto;
+  position: relative;
+}
+
+.input_section_content input {
+  width: 90%;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  font-size: 16px;
+}
+
+.input_section_content svg {
+  position: absolute;
+  right: 20px;
 }
