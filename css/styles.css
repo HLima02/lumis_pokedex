@@ -161,11 +161,15 @@ nav a {
   justify-content: center;
   align-items: center;
   gap: 1px;
+  max-width: 100px;
+  width: 100%;
+  overflow: hidden;
+  width: 999999999px;
+  justify-content: flex-start;
 }
 
 .pagination_count_item {
-  width: 32px;
-  height: 32px;
+  padding: 8px 10px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -173,10 +177,11 @@ nav a {
 }
 
 .pagination_count_item_active {
-  content: "";
+  padding: 8px 10px;
   background-color: var(--gray-800);
   color: var(--white);
   transition: all ease-in-out 0.3s;
+  border-radius: 10px;
 }
 
 

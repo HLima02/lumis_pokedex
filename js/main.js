@@ -2,8 +2,6 @@ import { fetchPokemon, fetchPokemonDetail } from './api.js'
 import { renderPokemons, renderModalPokemon } from './render.js'
 import { state, pokemonDetailState } from './state.js'
 
-let isModalOpen = false
-
 //Renderização inicial dos cards de pokemon na tela
 async function initRenderPokemons(baseList) {
   const details = await Promise.all(
@@ -68,6 +66,7 @@ async function searchPokemons(allList, pokeList, baseList){
   })
 }
 
+//Funções com a mecânica de passar e voltar páginas
 async function pagination(){
   const prevPage = document.querySelector('#prev')
   const nextPage = document.querySelector('#next')
@@ -81,14 +80,15 @@ async function pagination(){
   }
 
   prevPage.addEventListener('click', async () => {
-    console.log('Página anterior')
     state.currentPage --
     const pokeList = await fetchPokemon(state.currentPage * state.limit, 18)
     let baseList = pokeList.results
     initRenderPokemons(baseList)
+    
     if(state.currentPage <= 0) {
       prevPage.setAttribute('disabled', true)
     }
+    matchIndice()
   })
 
   nextPage.addEventListener('click', async () => {
@@ -97,10 +97,38 @@ async function pagination(){
     let baseList = pokeList.results
     initRenderPokemons(baseList)
     prevPage.removeAttribute('disabled')
-
+    
     if(state.currentPage >= 75) {
       nextPage.setAttribute('disabled', true)
     }
+    matchIndice()
+  })
+}
+
+//função para criar os indices de página baseado no tamanho da lista
+function createPaginationIndice(baseList) {
+  const indecesSection = document.querySelector('.pagination_count')
+  const numberOfPages = baseList / state.limit
+
+  for(let i = 1; i < numberOfPages; i++){
+    const indice = document.createElement('div')
+    indice.className = 'pagination_count_item'
+    indice.id = i
+    indice.innerHTML = i
+    indecesSection.appendChild(indice)
+  }
+}
+
+function matchIndice() {
+  let countList = 1350
+  let indicesList = document.querySelectorAll('.pagination_count_item')
+  const currentIndex = state.currentPage 
+
+  indicesList.forEach((item, index) => {
+    item.classList.toggle(
+      'pagination_count_item_active',
+      index === currentIndex
+    )
   })
 }
 
@@ -114,4 +142,6 @@ window.addEventListener('load', async () => {
   initRenderPokemons(baseList)
   searchPokemons(allList, pokeList, baseList)
   pagination()
+  createPaginationIndice(allList.count)
+  matchIndice() 
 })
