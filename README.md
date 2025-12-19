@@ -23,3 +23,7 @@ O objetivo principal é demonstrar domínio dos fundamentos de JavaScript, manip
 - **Vanilla JavaScript (ES6+)**
 - **ES Modules**
 - **PokéAPI** (https://pokeapi.co)
+
+## hospedagem
+- É possive ver o projeto eem funcionamento através do link a seguir
+  https://lumis-pokedex.vercel.app/
