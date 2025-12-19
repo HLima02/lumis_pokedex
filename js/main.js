@@ -2,6 +2,8 @@ import { fetchPokemon, fetchPokemonDetail } from './api.js'
 import { renderPokemons, renderModalPokemon } from './render.js'
 import { state, pokemonDetailState } from './state.js'
 
+const caroussel = document.querySelector('.pagination_count')
+
 //Renderização inicial dos cards de pokemon na tela
 async function initRenderPokemons(baseList) {
   const details = await Promise.all(
@@ -70,6 +72,8 @@ async function searchPokemons(allList, pokeList, baseList){
 async function pagination(){
   const prevPage = document.querySelector('#prev')
   const nextPage = document.querySelector('#next')
+  
+
 
   const pokeList = await fetchPokemon()
   let baseList = pokeList.results
@@ -88,6 +92,8 @@ async function pagination(){
     if(state.currentPage <= 0) {
       prevPage.setAttribute('disabled', true)
     }
+
+    moveCarousel('prev')
     matchIndice()
   })
 
@@ -101,7 +107,9 @@ async function pagination(){
     if(state.currentPage >= 75) {
       nextPage.setAttribute('disabled', true)
     }
+
     matchIndice()
+    moveCarousel('next')
   })
 }
 
@@ -119,8 +127,8 @@ function createPaginationIndice(baseList) {
   }
 }
 
+//Funcionalidade de toggle no indices da páginação
 function matchIndice() {
-  let countList = 1350
   let indicesList = document.querySelectorAll('.pagination_count_item')
   const currentIndex = state.currentPage 
 
@@ -130,6 +138,13 @@ function matchIndice() {
       index === currentIndex
     )
   })
+}
+
+function moveCarousel(type){
+  const itemWidth = state.currentPage > 9 ? 29 : 22
+  const deslocamento = state.currentPage * itemWidth
+
+  caroussel.style.marginLeft = `-${deslocamento}px`
 }
 
 

@@ -156,16 +156,23 @@ nav a {
   cursor: pointer;
 }
 
+.pagination_count_container {
+  max-width: 100px;
+  width: 100%;
+  overflow: hidden;
+}
+
 .pagination_count {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 1px;
-  max-width: 100px;
-  width: 100%;
-  overflow: hidden;
   width: 999999999px;
   justify-content: flex-start;
+  position: relative;
+  left: 0;
+  margin-left: 5px;
+  transition: all ease-in-out 0.4s;
 }
 
 .pagination_count_item {
@@ -174,6 +181,7 @@ nav a {
   justify-content: center;
   align-items: center;
   border-radius: 8px ;
+  font-size: 14px;
 }
 
 .pagination_count_item_active {
