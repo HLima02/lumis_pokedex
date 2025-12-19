@@ -19,11 +19,58 @@ import { state } from './state.js'
 
 window.addEventListener('load', async () => {
   fetchPokemon()
+  let debounceTimer = null
+  const searcInput = document.querySelector('#input_pokemon')
+
+
   const pokeList = await fetchPokemon()
+  let baseList = pokeList.results
+
+  searcInput.addEventListener('input', (e) => {
+    clearTimeout(debounceTimer)
+
+    debounceTimer = setTimeout(async () => {
+      const search = e.target.value.toLowerCase()
+
+      baseList = search !== '' ? (
+        pokeList.results.filter(item => item.name.toLowerCase().includes(search))
+      ): pokeList.results
+
+      const details = await Promise.all(
+        baseList.map(item => fetchPokemonDetail(item.url))
+      )
+
+      renderPokemons(details)
+      return
+    }, 1000)
+  })
 
   const details = await Promise.all(
-    pokeList.results.map(item => fetchPokemonDetail(item.url))
+    baseList.map(item => fetchPokemonDetail(item.url))
   )
 
   renderPokemons(details)
+
+  
+  // searcInput.addEventListener('input', (e) => {
+  //   clearTimeout(debounceTimer)
+
+  //   debounceTimer = setTimeout(async () => {
+  //     const search = e.target.value.toLowerCase()
+
+  //     const filteredList = search ? (
+  //       baseList.filter(
+  //         item => item.toLowerCase().includes(search)
+  //       )
+  //     ) : baseList
+
+  //     const details = await Promise.all(
+  //       filteredList.map(iitem => fetchPokemonDetail(item.url))
+  //     )
+
+  //   }, 3000)
+  // })
+
+ 
+  
 })
