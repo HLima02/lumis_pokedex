@@ -2,16 +2,19 @@ import { fetchPokemon, fetchPokemonDetail } from './api.js'
 import { renderPokemons } from './render.js'
 import { state } from './state.js'
 
+//Renderização inicial dos cards de pokemon na tela
+async function initRenderPokemons(baseList) {
+  const details = await Promise.all(
+    baseList.map(item => fetchPokemonDetail(item.url))
+  )
 
-window.addEventListener('load', async () => {
-  fetchPokemon()
+  renderPokemons(details)  
+}
+
+//Faz o filtro dos pokemons baseado no que o usuário digita no input
+async function searchPokemons(allList, pokeList, baseList){
   let debounceTimer = null
   const searcInput = document.querySelector('#input_pokemon')
-
-  const allList = await fetchPokemon(0, 2000)
-  const pokeList = await fetchPokemon()
-  let baseList = pokeList.results
-  console.log(allList.results)
 
   //"Escuta" digitação no campo de input, filtra e faz debounce de resultados
   searcInput.addEventListener('input', (e) => {
@@ -34,10 +37,17 @@ window.addEventListener('load', async () => {
       return
     }, 1000)
   })
+}
 
-  const details = await Promise.all(
-    baseList.map(item => fetchPokemonDetail(item.url))
-  )
 
-  renderPokemons(details)  
+window.addEventListener('load', async () => {
+  fetchPokemon()
+
+  const allList = await fetchPokemon(0, 2000)
+  const pokeList = await fetchPokemon()
+  let baseList = pokeList.results
+
+
+  searchPokemons(allList, pokeList, baseList)
+  initRenderPokemons(baseList)
 })
