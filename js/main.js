@@ -39,6 +39,37 @@ async function searchPokemons(allList, pokeList, baseList){
   })
 }
 
+async function pagination(){
+  const prevPage = document.querySelector('#prev')
+  const nextPage = document.querySelector('#next')
+
+  const pokeList = await fetchPokemon()
+  let baseList = pokeList.results
+
+  if(state.currentPage <= 0) {
+    prevPage.setAttribute('disabled', true)
+  }
+
+  prevPage.addEventListener('click', async () => {
+    console.log('Página anterior')
+    state.currentPage --
+    const pokeList = await fetchPokemon(state.currentPage * state.limit, 18)
+    let baseList = pokeList.results
+    initRenderPokemons(baseList)
+    if(state.currentPage <= 0) {
+      prevPage.setAttribute('disabled', true)
+    }
+  })
+
+  nextPage.addEventListener('click', async () => {
+    state.currentPage ++
+    const pokeList = await fetchPokemon(state.currentPage * state.limit, 18)
+    let baseList = pokeList.results
+    initRenderPokemons(baseList)
+    prevPage.removeAttribute('disabled')
+  })
+}
+
 
 window.addEventListener('load', async () => {
   fetchPokemon()
@@ -50,4 +81,5 @@ window.addEventListener('load', async () => {
 
   searchPokemons(allList, pokeList, baseList)
   initRenderPokemons(baseList)
+  pagination()
 })

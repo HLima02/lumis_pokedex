@@ -1,6 +1,6 @@
 export const state = {
   pokemons: [],
-  currentPage: 1,
+  currentPage: 0,
   limit: 18,
   search: ''
 }
