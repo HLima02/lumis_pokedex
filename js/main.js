@@ -1,6 +1,8 @@
 import { fetchPokemon, fetchPokemonDetail } from './api.js'
-import { renderPokemons } from './render.js'
-import { state } from './state.js'
+import { renderPokemons, renderModalPokemon } from './render.js'
+import { state, pokemonDetailState } from './state.js'
+
+let isModalOpen = false
 
 //Renderização inicial dos cards de pokemon na tela
 async function initRenderPokemons(baseList) {
@@ -9,6 +11,33 @@ async function initRenderPokemons(baseList) {
   )
 
   renderPokemons(details)  
+  getPokemonDetail()
+}
+
+//Faz a busca de nome, imagem e descrição do pokemon e renderiza dentro do modal
+async function getPokemonDetail() {
+  let cardList = document.querySelectorAll('.pokemon_card')
+  let pokemonDetailModal = document.querySelector('#modal')
+  let closeModal = document.querySelector(".close_modal")
+
+  cardList.forEach((item) => {
+    item.addEventListener('click', async () => {
+      const descriptionModal = await fetchPokemonDetail(`https://pokeapi.co/api/v2/pokemon-species/${item.id}`)
+      const defaultDetails = await fetchPokemonDetail(`https://pokeapi.co/api/v2/pokemon/${item.id}`)
+
+      pokemonDetailState.name = defaultDetails.name
+      pokemonDetailState.imageurl = defaultDetails.sprites.front_default
+      pokemonDetailState.mainType = defaultDetails.types[0].type.name
+      console.log(pokemonDetailState.mainType)
+      pokemonDetailState.description = descriptionModal.flavor_text_entries[0].flavor_text
+      renderModalPokemon(pokemonDetailState.name, pokemonDetailState.imageurl, pokemonDetailState.description, pokemonDetailState.mainType )
+      pokemonDetailModal.style.display = 'flex'
+    })
+  })
+
+  closeModal.addEventListener('click', () => {
+    pokemonDetailModal.style.display = 'none'
+  })
 }
 
 //Faz o filtro dos pokemons baseado no que o usuário digita no input
@@ -81,10 +110,8 @@ window.addEventListener('load', async () => {
   const pokeList = await fetchPokemon()
   state.count = pokeList.count
   let baseList = pokeList.results
-  console.log(state.count)
 
-
-  searchPokemons(allList, pokeList, baseList)
   initRenderPokemons(baseList)
+  searchPokemons(allList, pokeList, baseList)
   pagination()
 })

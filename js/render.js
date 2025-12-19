@@ -1,4 +1,5 @@
 const list = document.querySelector('#poke_list')
+const modal = document.querySelector('#modal_info_content')
 
 const typeColors = {
   grass: 'var(--green-plant)',
@@ -27,6 +28,7 @@ export function renderPokemons(pokemons) {
   pokemons.forEach(item => {
     const card = document.createElement('div')
     card.className = 'pokemon_card'
+    card.setAttribute('id', item.id)
 
     const mainType = item.types[0].type.name
     const typeColor = typeColors[mainType] 
@@ -44,4 +46,29 @@ export function renderPokemons(pokemons) {
     `
     list.appendChild(card);
   });
+}
+
+export function renderModalPokemon(name, imgUrl, description, mainType){
+  modal.innerHTML = ""
+
+  const modalContent = document.createElement('div')
+  modalContent.className = 'poke_modal_content'
+
+  const typeColor = typeColors[mainType] 
+  console.log(typeColor)
+  modalContent.style.backgroundColor = typeColor
+
+  modalContent.innerHTML = `
+    <div class="poke_modal_txt">
+     <div class="left_poke">
+      <img src="${imgUrl}" alt="${name}"> 
+     </div>
+     <div class="right_poke">
+      <h3>${name}</h3>
+      <p>${description}</p>
+     </div>
+    </div>
+  `
+
+  modal.appendChild(modalContent)
 }
