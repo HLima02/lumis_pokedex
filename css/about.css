@@ -1,0 +1,25 @@
+nav.header_about a {
+  color: #fff;
+}
+
+.abount_banner {
+  background-image: url('/assets/about_banner.gif');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+}
+
+.abount_banner::before {
+  content: '';
+  background-color: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+}

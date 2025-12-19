@@ -46,6 +46,7 @@ async function pagination(){
   const pokeList = await fetchPokemon()
   let baseList = pokeList.results
 
+
   if(state.currentPage <= 0) {
     prevPage.setAttribute('disabled', true)
   }
@@ -67,16 +68,20 @@ async function pagination(){
     let baseList = pokeList.results
     initRenderPokemons(baseList)
     prevPage.removeAttribute('disabled')
+
+    if(state.currentPage >= 75) {
+      nextPage.setAttribute('disabled', true)
+    }
   })
 }
 
 
 window.addEventListener('load', async () => {
-  fetchPokemon()
-
   const allList = await fetchPokemon(0, 2000)
   const pokeList = await fetchPokemon()
+  state.count = pokeList.count
   let baseList = pokeList.results
+  console.log(state.count)
 
 
   searchPokemons(allList, pokeList, baseList)

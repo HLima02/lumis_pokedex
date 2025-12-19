@@ -41,6 +41,8 @@
 header {
   border-bottom: 1px solid var(--gray-100);
   padding: 1rem 3%;
+  position: relative;
+  z-index: 100;
 }
 
 .header_section {
