@@ -255,3 +255,16 @@ nav a {
   width: 100%;
   height: 100%;
 }
+
+@media only screen and (max-width: 743px){
+  .input_section {
+    padding: 0 3%;
+  }
+}
+
+@media only screen and (max-width: 440px){
+  .pokemon_card {
+    max-width: 290px;
+    height: 300px;
+  }
+}
