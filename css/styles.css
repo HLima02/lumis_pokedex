@@ -282,6 +282,20 @@ nav a {
   }
 }
 
+@media only screen and (max-width: 570px){
+  .poke_modal_txt {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  
+  .right_poke {
+    width: 90%;
+    padding-bottom: 30px;
+  }
+}
+
+
 @media only screen and (max-width: 440px){
   .pokemon_card {
     max-width: 290px;
